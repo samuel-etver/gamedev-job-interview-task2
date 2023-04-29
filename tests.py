@@ -1,23 +1,50 @@
 import unittest
 import logging
-import common
 import generate_numbers as gennum
 import serialize_numbers as sernum
 import deserialize_numbers as desnum
+
+SummaryInTextLength = None
+SummarySerializedTextLength = None
 
 
 def calculate_ratio(text_in_length, text_out_length):
     return (100.0 * text_out_length) / text_in_length
 
 
-class TestSerialization(unittest.TestCase):
+def setUpModule():
+    global SummaryInTextLength, \
+           SummarySerializedTextLength
+    
+    SummaryInTextLength = 0
+    SummarySerializedTextLength = 0
+
+
+def tearDownModule():
+    average_ratio = calculate_ratio(SummaryInTextLength,
+                                    SummarySerializedTextLength)
+    logging.info("\n---SUMMARY RESULT---")
+    logging.info(" average ratio: ({out_len}/{in_len})={ratio:.1f}%".format(
+        out_len=SummarySerializedTextLength,
+        in_len=SummaryInTextLength,
+        ratio=average_ratio))
+
+
+class TestSerialization(unittest.TestCase):        
     def check_serialization(self, numbers):
+        global SummaryInTextLength, \
+               SummarySerializedTextLength
+        
         in_text = gennum.numbers_to_string(numbers)            
         serialized_text = sernum.serialize_text(in_text)
         deserialized_text = desnum.deserialize_text(serialized_text)
         self.assertEqual(in_text, deserialized_text)
         in_text_length = len(in_text)
         serialized_text_length = len(serialized_text)
+        
+        SummaryInTextLength += in_text_length
+        SummarySerializedTextLength += serialized_text_length
+        
         ratio = calculate_ratio(in_text_length, serialized_text_length)
         logging.info(" ratio: ({out_len}/{in_len})={ratio:.1f}%".format(
             out_len=serialized_text_length,
