@@ -33,7 +33,7 @@ def duplicate_numbers(numbers, count):
 
 
 def numbers_to_string(numbers):
-    return ' '.join(map(str, numbers))
+    return common.SERIALIZE_ITEM_DELIMETER.join(map(str, numbers))
 
 
 def print_numbers(numbers):
@@ -62,4 +62,4 @@ if __name__ == '__main__':
     list_length = parse_input()
     numbers = generate_random_numbers(list_length)#duplicate_numbers(generate_all_numbers_of_digits1(), 3) #list_length)
     print_numbers(numbers)
-    
+
