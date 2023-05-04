@@ -44,9 +44,12 @@ class TestSerialization(unittest.TestCase):
         
         SummaryInTextLength += in_text_length
         SummarySerializedTextLength += serialized_text_length
+
+        logging.info("\tINPUT STRING: " + in_text)
+        logging.info("\tOUTPUT STRING: " + serialized_text)
         
         ratio = calculate_ratio(in_text_length, serialized_text_length)
-        logging.info(" ratio: ({out_len}/{in_len})={ratio:.1f}%".format(
+        logging.info("\tRATIO: ({out_len}/{in_len})={ratio:.1f}%".format(
             out_len=serialized_text_length,
             in_len=in_text_length,
             ratio=ratio))
