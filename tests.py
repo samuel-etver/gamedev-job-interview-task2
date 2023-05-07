@@ -1,5 +1,6 @@
 import unittest
 import logging
+import datetime
 import generate_numbers as gennum
 import serialize_numbers as sernum
 import deserialize_numbers as desnum
@@ -114,5 +115,7 @@ class TestSerialization(unittest.TestCase):
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
+                        filename="output/output__{date}.txt".format(
+                            date=datetime.datetime.now().strftime("%Y-%m-%d__%H-%M-%S")),
                         format="%(message)s")
     unittest.main()
